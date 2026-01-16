@@ -1,0 +1,12 @@
+[Unit]
+Description=Mini MySQL Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/mnt/data/pv-work/try-opensrv-mysql/target/release/mini-mysql-server -p 13306 -r redis://127.0.0.1:16379
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
