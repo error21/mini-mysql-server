@@ -21,6 +21,7 @@ A lightweight MySQL-compatible server that translates SQL queries to Redis opera
 
 | Feature | Description |
 |---------|-------------|
+| **Cross-Platform** | Works on Linux (Ubuntu) and Windows 11 |
 | **MySQL 8 Compatible** | Works with any MySQL/MariaDB client |
 | **SQL Whitelist** | Only allows safe, predefined query patterns |
 | **Rate Limiting** | IP-based throttling via Redis |
@@ -172,6 +173,13 @@ Empty set (0 rows)
 - Rust 1.70+
 - Redis 6.0+
 
+### Supported Platforms
+
+| Platform | Status | Notes |
+|----------|--------|-------|
+| Linux (Ubuntu) | Tested | systemd service file included |
+| Windows 11 | Tested | Use NSSM for service registration |
+
 ### Build
 
 ```bash
@@ -189,6 +197,21 @@ cargo build --release
   --scan-limit 100 \
   --rate-limit 100 \
   --rate-window 60
+```
+
+### Windows Service (NSSM)
+
+```powershell
+# Install NSSM
+winget install nssm
+
+# Register as Windows service
+nssm install mini-mysql "C:\path\to\mini-mysql-server.exe"
+nssm set mini-mysql AppDirectory "C:\path\to"
+nssm set mini-mysql AppParameters "-p 13306 -r redis://127.0.0.1:6379"
+
+# Start service
+nssm start mini-mysql
 ```
 
 ## Configuration
